@@ -1,4 +1,12 @@
-void teste() {
+/*
+Dado o código à esquerda, preencha a tabela à direita com todas as mudanças de valor das variáveis até o final da execução do
+programa. Para representar o endereço de uma variável, utilize o símbolo & seguido do nome da variável. Ex.: &t (endereço da
+variável t).
+*/
+
+#include <stdio.h>
+
+int main() {
     int t, j = 1, *p, *g;
 
     t = 5;
@@ -13,4 +21,6 @@ void teste() {
         *g = t*j + 1;
     }
     *p = t + j + *g;
+
+return 0;
 }
