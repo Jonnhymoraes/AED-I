@@ -28,41 +28,89 @@ da chamada de void imprimeVet (int *vet, int n) { }
 #include <stdio.h>
 #include <stdlib.h>
 
-int** criaMatriz(int n, int m){
+int** criaMatriz(int m, int n);
+void leiaMatriz(int **mat, int m, int n);
+int somaMatriz(int **mat, int m, int n);
+int* colunaMatriz(int ** mat, int m, int n, int ncoluna);
+void liberaMatriz(int **mat, int ncoluna);
+void imprimeMatriz(int **mat, int m, int n);
+void imprimeVetor (int *vet, int n);
 
-	int **mat;
+int main(){
+	
+	int m,n,**pt,i,j;
 
-	mat = (int **) malloc( m * sizeof(int*));
+    printf("linha: ");
+    scanf("%d", &m);
+    printf("coluna: ");
+    scanf("%d", &n);
 
-	for (int i = 0; i < m; ++i)
-	{
-		mat[i] = (int*) malloc( n * sizeof(int));
-	}
+    pt = (int **)criaMatriz(m,n);
 
-	printf("Matriz criada!\n");
-	return mat;
+    for(i=0;i<m;i++){
+        for(j=0;j<n;j++){
+            pt[i][j]=rand()%100;
+			
+        }
+    }
+	imprimeMatriz(pt,m,n);
+	liberaMatriz(pt,n);
+
+return 0;
+}
+
+
+int** criaMatriz(int m, int n){
+
+	  int **mat;
+
+    mat = (int **)malloc(m*sizeof(int *));
+	mat = (int *)malloc(n*sizeof(int));
+    
+	printf("Matriz criada!!\n");
+
+    return mat;
+}
+
+void leiaMatriz(int **mat, int m, int n){
 
 }
 
-void liberaMatriz(int **mat,int m){
+int somaMatriz(int **mat, int m, int n){
 
-	for (int i = 0; i < m; ++i)
-	{
-		free(mat[i]);
-	}
+}
 
-	free(mat);
+ int* colunaMatriz(int ** mat, int m, int n, int ncoluna){
+
+ }
+
+void liberaMatriz(int **mat, int ncoluna){
+
+	int i;
+    
+    for(i=0;i<ncoluna;i++){
+        free(mat[i]);    
+    }
+    free(mat);
 	printf("Matriz liberada!\n");
 }
 
-int main(int argc, char const *argv[])
-{
-	int m=2, n=2;
-	int **ptr;
+void imprimeMatriz(int **mat, int m, int n){
 
-	ptr = criaMatriz(m,n);
-	liberaMatriz(ptr,m);
+   int i,j;
 
+    for(i=0;i<m;i++){
+        for(j=0;j<n;j++){
+            printf("%d\t",mat[i][j]);
+        }
+        printf("\n");
+    }
+}
 
-	return 0;
+void imprimeVetor (int *vet, int n){
+
+	int i;
+    for(i=0;i<n;i++)
+        printf("vet[%d]=%d\n",i,vet[i]);
+    
 }

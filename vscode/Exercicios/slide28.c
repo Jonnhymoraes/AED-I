@@ -26,6 +26,7 @@ int menu(void);
 int posicao = 0;
 
 int main(){
+
 	int escolha;
 	
 	Pessoa *inicio;
