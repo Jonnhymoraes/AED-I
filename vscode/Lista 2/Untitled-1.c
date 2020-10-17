@@ -117,20 +117,33 @@ void buscar (var *inicio){
 }
 
 void excluir(var *inicio){
-    agenda_p *nomeAux, *nome;
-
-        nome = pBuffer + sizeof (var);      //adicionando a variavel nome ao buffer
+    agenda_p *auxiliar, *anterior, *nome, nomeAux;
+    var *i;
+    void *p;
+                            //adicionando a variavel nome ao buffer
 
         printf("Digite o nome que deseja excluir: ");               //o nome vai ser inserido na variavel auxiliar q aponta para nome na strcut
         scanf("%s", nomeAux -> nome);
         printf("\n");
 
+        i= inicio;
+        i -> j=0;
+
         for(inicio -> i=0; inicio ->i < inicio -> contador; inicio -> i++){    //percorrendo toda a agenda
+            p = inicio + sizeof(var) + i -> i * sizeof(agenda_p);
+            auxiliar = p;
             if((strcmp(nomeAux -> nome, nome -> nome)) == 0){                   //teste para verificação do nome digitado com o nome já existente na agenda
-                printf("Nome excluido!!\n");                                  
+                printf("Tem certeza que deseja excluir %s da agenda? [1.SIM / 2.NAO]?\n",nome);
+                scanf("%d",&(i -> j));
+                    if(i -> j==1){
+                        for(inicio -> j = inicio ->i; i -> j < inicio -> contador - 1; inicio -> j++){
+                    }
+                *p = nomeAux -> nome;                                 
                 inicio -> contador--;                                          //decrementa a variavel contador e incrementa a flag j
                 inicio -> j++;
             }
+            
+            free(p);
             else
                 inicio -> contador--;                                           //se não achar decrementa o contador
             }
