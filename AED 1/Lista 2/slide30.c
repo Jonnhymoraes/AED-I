@@ -38,50 +38,90 @@ void imprimeVetor (int *vet, int n);
 
 int main(){
 	
-	int m,n,**pt,i,j;
+	int m,n,**mat,escolha=0,ncoluna,*vet;
 
-    printf("linha: ");
+    printf(">>>>>>> Crie uma matriz <<<<<<< \n");
+    printf("Digite o numero de linhas da matriz: ");
     scanf("%d", &m);
-    printf("coluna: ");
+    printf("Digite o numero de colunas da matriz: ");
     scanf("%d", &n);
 
-    pt = (int **)criaMatriz(m,n);
-
-    for(i=0;i<m;i++){
-        for(j=0;j<n;j++){
-            pt[i][j]=rand()%100;
-			
-        }
-    }
-	imprimeMatriz(pt,m,n);
-	liberaMatriz(pt,n);
-
+    for (;;) {
+		escolha = menu();
+		switch (escolha) {
+		case 1:
+			criaMatriz(m,n);
+			break;
+		case 2:
+			leiaMatriz(mat,m,n);
+			break;
+		case 3:
+            somaMatriz(mat,m,n);
+            break;
+        case 4:
+            colunaMatriz(mat,m,n,ncoluna);
+            break;
+        case 5:
+            imprimeMatriz(mat, m,n);
+            break;
+        case 6:
+            exit(1);
+        default:
+		free(mat);
+		}
+	}
 return 0;
 }
 
+int menu(){
+	int c = 0;
+	do {
+		printf("\n\t\t----- ESCOLHA UMA OPCAO -----\n\n\t");
+        printf("\n\t\t 1 - Criar ou Redimensionar Matriz\n\t");
+        printf("\t 2 - Realizar a leitura dos elementos da Matriz\n\t");
+        printf("\t 3 - Soma dos elementos da Matriz\n\t");
+        printf("\t 4 - Retornar em um vetor os elementos de uma determinada coluna da Matriz\n\t");
+        printf("\t 5 - Imprimir Matriz\n\t");
+        printf("\t 6 - Sair\n\t");
+        printf("\tDigite a opcao que deseja: ");
+		scanf("%d", &c);
+	} while (c <= 0 || c > 6);
+	return c;
+}
 
 int** criaMatriz(int m, int n){
 
 	  int **mat;
 
-    mat = (int **)malloc(m*sizeof(int *));
-	mat = (int *)malloc(n*sizeof(int));
+    mat = (int **) malloc(m * sizeof(int *));
+	mat = (int *) malloc(n * sizeof(int ));
     
-	printf("Matriz criada!!\n");
+	printf("\n\t\tMatriz criada!!\n");
 
     return mat;
 }
 
 void leiaMatriz(int **mat, int m, int n){
 
+    int i,j;
+    for(i=0;i<m;i++){
+        for(j=0;j<n;j++){
+            mat[i][j]=rand()%100;
+			
+        }
+    }
 }
 
 int somaMatriz(int **mat, int m, int n){
 
+
+return mat;
 }
 
- int* colunaMatriz(int ** mat, int m, int n, int ncoluna){
+int* colunaMatriz(int ** mat, int m, int n, int ncoluna){
 
+
+return mat;
  }
 
 void liberaMatriz(int **mat, int ncoluna){

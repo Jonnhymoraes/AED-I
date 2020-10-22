@@ -18,22 +18,18 @@ typedef struct pessoa {
 	struct pessoa *proximo;
 } Pessoa;
 
-Pessoa *cria_lista(void);
 Pessoa* insere(Pessoa *inicio);
 void imprime(Pessoa *inicio);
-int menu(void);
-
-int posicao = 0;
+int menu();
 
 int main(){
 
 	int escolha;
-	
 	Pessoa *inicio;
 	
-	inicio = cria_lista();
+	inicio = (Pessoa *) malloc(sizeof (Pessoa));  //alocando memoria para todos os campos da agenda
+	inicio -> proximo = NULL;		
 
-	cria_lista();
 	for (;;) {
 		escolha = menu();
 		switch (escolha) {
@@ -42,23 +38,18 @@ int main(){
 			break;
 		case 2:
 			imprime(inicio);
-			printf("******** FIM DA LISTA *********\n");
+			printf("\nFIM DA LISTA!! \n");
 			exit(0);
 			break;
+		default:
+		free(inicio);
+		exit(1);
 		}
 	}
 	return 0;
 }
 
-Pessoa *cria_lista(void){
-	Pessoa *iniciar;
-	
-	iniciar = (Pessoa *) malloc(sizeof (Pessoa));  //alocando memoria para todos os campos da agenda
-	iniciar -> proximo = NULL;							//ponteiro apontando para a próxima posição (Null)
-return iniciar;
-}
-
-int menu(void){
+int menu(){
 	int c = 0;
 	do {
 		printf("\t\t-----CADASTRO DE PESSOAS-----\n\n\t 1 - Adicionar nomes\n\t 2 - Parar de adicionar nomes \n\n\t");
@@ -69,35 +60,48 @@ int menu(void){
 }
 
 Pessoa* insere(Pessoa *inicio){
-	Pessoa *info;
-	
-	info = (Pessoa *) malloc(sizeof(Pessoa));
-	posicao++;
-	
-	if (info == NULL){
-		printf("\nNao foi possivel alocar!!");
-		exit(1);
-	}
-										
-		
-	printf("Insira o nome: ");
-	scanf("%s", info -> nome);
-    printf("Insira a idade: ");
-    scanf("%d", info -> nome);
-    printf("Insira a altura: ");
-    scanf("%d", info -> nome);
-	
-	info->proximo=inicio->proximo;
-	inicio->proximo = info;
-	return inicio;
+	    
+		if(inicio != NULL){									//verifica se há espaço disponivel
+        Pessoa *novo, *aux;								
+        aux = inicio;										//ponteiro auxiliar recebe os campos do cadastro
+        novo = (Pessoa *) malloc(sizeof(Pessoa));			// ponteiro novo aloca memoria para novas informações
+        if(novo != NULL){
+            printf("Insira o nome da pessoa: ");
+            scanf("%s", &novo->nome);
+            printf("Insira a idade: ");
+            scanf("%d", &novo->idade);
+            printf("Insira a altura (em cm): ");
+            scanf("%d", &novo->altura);
+            novo-> proximo = NULL;
+
+            while(aux->proximo != NULL)
+                aux = aux -> proximo;						// auxiliar vai apontar para a proxima posição
+           		aux -> proximo = novo;						// a proxima posição vão estar os novos dados do cadastro
+        }
+		else
+            printf("Impossiver armazenar! ");
+    	}
+		else
+        printf("Impossivel armazenar");
+
+return NULL;
 }
 
 void imprime(Pessoa *inicio){
 	Pessoa *info;													
 	
-	for(info = inicio -> proximo; info != NULL; info = info -> proximo){			
+	info = inicio;
+
+	if(info -> proximo != NULL){						//verifica se a agenda não ta vazia
+		info = info -> proximo;
+		while(info != NULL){			
 		printf("\nNome: %s\n", info -> nome);							
-        printf("\nIdade: %d\n", info -> idade);
-        printf("\nAltura: %d\n", info -> altura);
+        printf("Idade: %d\n", info -> idade);
+        printf("Altura: %d\n", info -> altura);
+		printf("############################\n");
+		info = info -> proximo;						//percorre todo o cadastro de contatos
 		}
+	}
+	else
+		printf("Agenda vazia!!");
 }
