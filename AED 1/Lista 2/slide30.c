@@ -35,6 +35,7 @@ int* colunaMatriz(int ** mat, int m, int n, int ncoluna);
 void liberaMatriz(int **mat, int ncoluna);
 void imprimeMatriz(int **mat, int m, int n);
 void imprimeVetor (int *vet, int n);
+int menu();
 
 int main(){
 	
@@ -60,6 +61,7 @@ int main(){
             break;
         case 4:
             colunaMatriz(mat,m,n,ncoluna);
+            imprimeVetor(vet, n)
             break;
         case 5:
             imprimeMatriz(mat, m,n);
@@ -91,38 +93,64 @@ int menu(){
 
 int** criaMatriz(int m, int n){
 
-	  int **mat;
+    int **mat,opcao,linha,coluna;
 
-    mat = (int **) malloc(m * sizeof(int *));
-	mat = (int *) malloc(n * sizeof(int ));
+    printf("\n\tDigite o que deseja fazer:\n\t 1 - Criar Matriz\n\t 2 - Redimensionar Matriz\n\t");
+    printf("Digite a opcao que deseja: ");
+    scanf("%d", &opcao);
+
+    if(opcao == 1){
+        mat = (int **)malloc(m * sizeof(int *));
+        mat = (int *)malloc(n * sizeof(int));   
+    }
+    if(opcao == 2){
+        printf("\n\tDigite o novo numero de linhas da matriz: ");
+        scanf("%d", &linha);
+        printf("\tDigite o novo numero de colunas da matriz: ");
+        scanf("%d", &coluna);
+        mat = (int **)malloc(linha * sizeof(int *));
+        mat = (int *)malloc(coluna * sizeof(int)); 
+    }
+    printf("\n\tMatriz criada!!\n");
     
-	printf("\n\t\tMatriz criada!!\n");
-
     return mat;
 }
 
 void leiaMatriz(int **mat, int m, int n){
 
     int i,j;
-    for(i=0;i<m;i++){
-        for(j=0;j<n;j++){
-            mat[i][j]=rand()%100;
-			
+    for(i = 0; i < m; i++){
+        for(j = 0; j < n; j++){
+            mat[m][n] = rand()%20;
+            //scanf("%d", &mat[m][n]);
         }
     }
 }
 
 int somaMatriz(int **mat, int m, int n){
+     int i,j,soma=0;
 
+    for(i = 0; i < m; i++){
+        for(j = 0; j < n; j++){
+            soma = soma + mat[m][n];
+        }
+    }
+    imprimeMatriz(mat,m,n);
+    printf("\n\nA soma dos valores: %d\n", soma);
 
-return mat;
+return soma;
 }
 
 int* colunaMatriz(int ** mat, int m, int n, int ncoluna){
 
+    printf("Digite a coluna que deseja imprimir: ");
+    scanf("\t%d", &ncoluna);
+
+
+
 
 return mat;
- }
+}
 
 void liberaMatriz(int **mat, int ncoluna){
 
@@ -139,9 +167,9 @@ void imprimeMatriz(int **mat, int m, int n){
 
    int i,j;
 
-    for(i=0;i<m;i++){
-        for(j=0;j<n;j++){
-            printf("%d\t",mat[i][j]);
+    for(i = 0; i < m; i++){
+        for(j = 0; j < n; j++){
+            printf("%d\t", mat[m][n]);
         }
         printf("\n");
     }
@@ -150,7 +178,7 @@ void imprimeMatriz(int **mat, int m, int n){
 void imprimeVetor (int *vet, int n){
 
 	int i;
-    for(i=0;i<n;i++)
-        printf("vet[%d]=%d\n",i,vet[i]);
+    for(i = 0; i < n; i++)
+        printf("vet[%d]=%d\n", i,vet[i]);
     
 }
