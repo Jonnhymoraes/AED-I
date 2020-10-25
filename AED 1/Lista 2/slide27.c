@@ -11,29 +11,28 @@ Dica: void * memcpy ( void * destination, const void * source, size_t num );
 #include <stdlib.h>
 #include <string.h>
 
-int main() {
+int main(){
 
-   char *frase[30];
-   int n;
+   char *frase;
+   int tamanho;
 
-   frase = (char*) malloc (30*sizeof(char));
+      frase = (char*) malloc (50*sizeof(char));       //alocando memoria para a frase
    
-   if(frase==NULL){
-        printf("Falta de memoria!");
-        exit(1);
+      if(frase==NULL){
+         printf("Impossivel alocar!");
+         exit(1);
    }
 
-   printf("Digite uma frase: ");
-   scanf("%s", frase);
-   printf("frase informada: %s\n", frase);
+      printf("\nDigite uma frase: ");
+      scanf("%[^\n]", frase);
 
-   n = strlen(frase);
-   printf("Tamanho da frase: %d\n", n);
+      tamanho = strlen(frase);
+      printf("\nTamanho da frase: %d\n", tamanho);
 
-   memcpy(frase, frase, n);
+      memcpy(frase, frase, tamanho);
 
-   printf("frase 'realocada': %s\n", frase);
+      printf("\nFrase realocada para tamanho ideal!");
 
    free(frase);
-   printf("free\n");
+return 0;
 }

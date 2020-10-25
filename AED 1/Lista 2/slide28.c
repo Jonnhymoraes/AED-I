@@ -67,16 +67,16 @@ Pessoa* insere(Pessoa *inicio){
         novo = (Pessoa *) malloc(sizeof(Pessoa));			// ponteiro novo aloca memoria para novas informações
         if(novo != NULL){
             printf("Insira o nome da pessoa: ");
-            scanf("%s", &novo->nome);
+            scanf("%s", novo -> nome);
             printf("Insira a idade: ");
-            scanf("%d", &novo->idade);
+            scanf("%d", &novo -> idade);
             printf("Insira a altura (em cm): ");
-            scanf("%d", &novo->altura);
+            scanf("%d", &novo -> altura);
             novo-> proximo = NULL;
 
             while(aux->proximo != NULL)
                 aux = aux -> proximo;						// auxiliar vai apontar para a proxima posição
-           		aux -> proximo = novo;						// a proxima posição vão estar os novos dados do cadastro
+           		aux -> proximo = novo;                     // a proxima posição vão estar os novos dados do cadastro
         }
 		else
             printf("Impossiver armazenar! ");
