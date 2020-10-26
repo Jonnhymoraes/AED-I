@@ -48,9 +48,9 @@ void Insertionsort (int data[], int n) {
     int tmp,i,j;
     
     for (j=1; j<n; j++){
-        i =j - 1;
-        tmp = data[j];
-    while ( (i>=0) && (tmp < data[i]) ){     //compara os numeros anterior e posterior
+        i =j - 1;                             // i recebe 0
+        tmp = data[j];                        // variavel temporaria recebe o vetor
+    while ( (i>=0) && (tmp < data[i]) ){      // realiza a comparação de tds os numeros do vetor inicial
         data[i+1] = data[i];
         i--;
     }//while
