@@ -1,3 +1,7 @@
+/*
+Com base nos trechos de código acima, fale qual será o resultado e explique.
+*/
+
 #include <stdio.h>
 
 // Trecho 1
