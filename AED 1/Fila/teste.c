@@ -71,7 +71,7 @@ Fila* cria_Fila(){
 
     if( fi != NULL){
         fi -> final = NULL;
-        fi ->inicio = NULL;
+        fi -> inicio = NULL;
     }
     printf("Fila criada!!");
     return fi;

@@ -16,27 +16,45 @@ typedef struct agenda{
     int idade;
 }agenda_p;
 
+typedef struct elemento{
+    agenda_p dados;
+    struct elemento *prox;
+}Elemento;
+
+typedef struct fila{
+    Elemento *inicio;
+    Elemento *final;
+}Fila;
+
 typedef struct variaveis{
-    int opcao,i,k,contador,j;                 // variaveis usadas no codigo
+    int opcao,i,k,contador,j,auxIdade;                 // variaveis usadas no codigo
+    char auxNome[20];
 }var;
 
-void *pBuffer;                                //criando um buffer na memoria  
+void *pBuffer;                                 //criando um buffer na memoria  
+var *inicio;                                  //ponteiro que vou acessar as structs
+Fila *fi;
+agenda_p *p_agenda;
 
-void insere (var *inicio);
-void imprime(var *inicio);
-void buscar (var *inicio);
-void excluir (var *inicio);
+void insere ();
+void imprime();
+void buscar ();
+void excluir ();
+Fila* RESET();
+int PUSH(agenda_p inicio);
+void imprime_Fila();
+void insertionSort(int formaOrda);
+void CLEAR();
 
 int main(){
 
-    var *inicio;                    //ponteiro que vou acessar as structs
-
-    if((pBuffer = (var *)malloc(sizeof(var)))== NULL){   // verificando se existe memoria disponivel
+    if((pBuffer = (var *)malloc(sizeof(var)))== NULL){              // verificando se existe memoria disponivel
         printf("Memoria insuficiente!!");
         exit(1);
 }
 
-    inicio = pBuffer;               // copiando as informações para o ponteiro 
+    p_agenda = pBuffer;               // copiando as informações para o ponteiro 
+    fi = RESET();
     inicio -> contador = 0;         // inicializando os 2 contadores em 0
     inicio -> k = 0;                // k vai ser usado no código como uma flag
     inicio -> j = 0;                // j vai ser usado no código como uma flag
@@ -49,37 +67,40 @@ int main(){
 
         switch (inicio -> opcao){
             case 1:
-                insere(inicio);
+                insere();
             break;
             case 2:
-                excluir(inicio);
+                excluir();
             break;
             case 3:
-                buscar(inicio);
+                buscar();
             break;
             case 4:
-                imprime(inicio);
+                imprime();
             break;
             case 5:
-              //  fila(inicio);
+                printf("Como deseja ordenar a Fila?\n 1 - Alfabetica\n 2 - Numerica\n");
+                scanf("%d", &inicio -> opcao);
+                imprime_Fila();
             break;
             default:
                 free(pBuffer);
                 exit(1);
+                CLEAR();
             }
         } while( (inicio -> opcao) != 0);
     return 0;    
 }
 
-void insere (var *inicio){
+void insere (){
         agenda_p *nome;         																	// ponteiro para armazenar os dados da agenda (nome)
 
-	    if((pBuffer = (agenda_p *)realloc(pBuffer,sizeof(var) + sizeof(agenda_p) + (inicio->contador * sizeof(agenda_p))))== NULL){           
+	    if((pBuffer = (agenda_p *)realloc(pBuffer,sizeof(var) + sizeof(agenda_p) + (inicio -> contador * sizeof(agenda_p)))) == NULL){           
 			printf("Memoria indisponivel");
             exit(1);                																// testando se há espaço na memoria. 
         }
 
-        nome = pBuffer + sizeof(var) + (inicio->contador * sizeof(agenda_p)) ;   					 // a agenda recebe um espaço para a inserção de dados
+        nome = pBuffer + sizeof(var) + (inicio -> contador * sizeof(agenda_p)) ;   					 // a agenda recebe um espaço para a inserção de dados
 
         printf("Digite um nome: ");
         scanf("%s", nome -> nome);
@@ -89,7 +110,7 @@ void insere (var *inicio){
         inicio -> contador++;               											// após salvar o primeiro nome o contador é incrementado
 }
 
-void imprime(var *inicio){
+void imprime(){
         agenda_p *nome;
 
     nome = pBuffer + sizeof(var);      										 //adicionando a variavel nome ao buffer
@@ -102,7 +123,7 @@ void imprime(var *inicio){
 	printf("\n");
 }
 
-void buscar (var *inicio){
+void buscar (){
         agenda_p *nomeAux, *nome;
 
         nome = pBuffer + sizeof (var);      //adicionando a variavel nome ao buffer
@@ -134,7 +155,7 @@ void buscar (var *inicio){
             free(nomeAux);                                                      //libera da memoria a variavel auxiliar do nome
 }
 
-void excluir(var *inicio){
+void excluir(){
     agenda_p *nomeAux, *nome;
 
         nome = pBuffer + sizeof (var);      //adicionando a variavel nome ao buffer
@@ -159,4 +180,82 @@ void excluir(var *inicio){
             inicio -> j = 0;                                                    //retorna o valor inicial da flag para novas consultas  
             free(nomeAux);                                                      //libera da memoria a variavel auxiliar do nome
 
+}
+
+Fila* RESET(){
+    
+    Fila *fi = (Fila *) malloc(sizeof(Fila));
+
+    if( fi != NULL){
+        fi -> final = NULL;
+        fi -> inicio = NULL;
+    }
+    printf("Fila criada!!");
+    return fi;
+}
+
+void CLEAR(){
+    if(fi != NULL){
+        Elemento* no;
+        while (fi -> inicio != NULL){
+            no = fi -> inicio;
+            fi -> inicio = fi -> inicio -> prox;
+            free(no);
+        }
+        free(fi);
+    }
+    printf("Fila Liberada da Memória!!");
+}
+ 
+int PUSH(agenda_p inicio){                                 //agen = dados da agenda
+    if(fi == NULL)
+        return 0;
+
+    Elemento *no = (Elemento *) malloc (sizeof(Elemento));
+
+    if(no == NULL)
+        return 0;
+
+    no -> dados = inicio;
+    no -> prox = NULL;
+
+    if(fi -> final == NULL)                                 //fila vazia
+        fi -> inicio = no;
+    else
+        fi -> final -> prox = no;
+
+    fi -> final = no;
+
+    return 1;
+}
+
+int POP(agenda_p info){
+    if(fi == NULL)
+        return 0;
+    if(fi -> final == NULL)
+        return 0;
+    
+    Elemento *no = fi -> inicio;
+    
+    fi -> inicio = fi -> inicio -> prox;
+    info = fi -> inicio -> dados;
+    if(fi -> inicio == NULL)                                       //fila ficou vazia
+        fi -> final = NULL;
+    free(no);
+
+    return 1;
+}
+
+void imprime_Fila(){
+    Elemento *no;
+
+    if (fi -> inicio == NULL){
+        printf("\nFila Vazia!\n");
+        return;
+    }
+    else{
+        insertionSort(inicio -> opcao);
+        for(no = fi -> inicio; no != NULL; no = no -> prox)
+            printf("\nNome %s Idade = %d", no -> dados.nome, no-> dados.idade);
+    }
 }
