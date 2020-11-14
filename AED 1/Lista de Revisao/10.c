@@ -1,19 +1,19 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int raiz (int n);
 
 int main(){
 
-    int n = 4;
+    int n;
 
-    // printf("Digite um numero: ");
-    // scanf("%d", &n);
+     printf("Digite um numero: ");
+     scanf("%d", &n);
 
-    printf("\nResultado: %d", raiz(n));
+    printf("\n\nResultado: %d\n", raiz(n));
 
-return 0;    
+return 0;
 }
-
 int raiz (int n){
 
     if (n == 0) 
