@@ -250,9 +250,6 @@ int main(){
 	tree * arvore = inicializar() ;
 	int op, valor,i, qtd;
 
-	srand(time(NULL));
-  	for (i=0; i < 10; i++) // gerando valores aleatórios na faixa de 0 a 100
-
 	while (1){
 		printf ( "------------------------------"
 				 "\n| 1- Criar Arvore;"
