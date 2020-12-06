@@ -278,7 +278,7 @@ int main(){
 				}
 				break;
 			case 2:
-			
+
 				if ( arvore -> raiz == NULL ){
 					printf ( "\n| Arvore vazia!\n\n" );
 				}
@@ -289,7 +289,11 @@ int main(){
 				}
 				break;
 			case 3:
-				EhArvoreArvl(arvore -> raiz) ? printf("Eh arvore AVL!!\n") : printf("Nao eh uma arvore AVL!!\n");
+				if(EhArvoreArvl(arvore -> raiz) == 1)
+					printf("Eh arvore AVL!!\n"); 
+				else
+					printf("Nao eh uma arvore AVL!!\n");
+				break;
   			}
         }
     return 0;
